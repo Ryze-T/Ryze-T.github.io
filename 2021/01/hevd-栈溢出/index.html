@@ -40,7 +40,7 @@
 <meta itemprop="description" content="源码分析 RtlCopyMemory 函数是一个 Windows API 函数，能将一块内存数据从一个地方复制到另一个地方。 存在漏洞的 107 行，Size未做验证，且由 Ring3 决定，所以存在内核栈溢出。">
 <meta itemprop="datePublished" content="2021-01-18T00:00:00+08:00" />
 <meta itemprop="dateModified" content="2021-01-18T00:00:00+08:00" />
-<meta itemprop="wordCount" content="2235">
+<meta itemprop="wordCount" content="2238">
 
 
 
@@ -291,7 +291,7 @@ function tagCloud(where, min, max) {
 
         <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2021/01/hevd-%E6%A0%88%E6%BA%A2%E5%87%BA/#comments"
             class="article-comment-link">评论</a></span>
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2235字</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2238字</span>
 		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 5分 </span>
       </div>
     </div>
@@ -538,6 +538,7 @@ int main()
 <h3 id="结果">结果</h3>
 <p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201119230852763-20210118233555729.png" alt="image-20201119230852763"></p>
 <h2 id="参考">参考</h2>
+<p>参考 <a href="https://github.com/ThunderJie/Windows-Kernel-Exploit">ThunderJie</a></p>
 
     </div>
     <div class="article-footer">
