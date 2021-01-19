@@ -34,7 +34,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://ryze-t.github.io/" />
-<meta property="og:updated_time" content="2021-01-18T00:00:00+08:00" />
+<meta property="og:updated_time" content="2021-01-19T00:00:00+08:00" />
 <meta itemprop="name" content="Ryze">
 <meta itemprop="description" content="">
 <meta name="twitter:card" content="summary"/>
@@ -145,12 +145,16 @@
     <div id="tag-cloud-list" class="widget-body">
             
             
-            <a href="https://ryze-t.github.io/tags/hevd/" class="tag-list-link" rel="1">hevd<span
+            <a href="https://ryze-t.github.io/tags/hevd/" class="tag-list-link" rel="3">hevd<span
+               class="tag-list-count">3</span></a>
+            
+            
+            <a href="https://ryze-t.github.io/tags/index/" class="tag-list-link" rel="1">index<span
                class="tag-list-count">1</span></a>
             
             
-            <a href="https://ryze-t.github.io/tags/windows/" class="tag-list-link" rel="1">windows<span
-               class="tag-list-count">1</span></a>
+            <a href="https://ryze-t.github.io/tags/windows/" class="tag-list-link" rel="3">windows<span
+               class="tag-list-count">3</span></a>
             
     </div>
 <script>
@@ -184,11 +188,15 @@ function tagCloud(where, min, max) {
             
             
             <li class="tag-list-item"><a href="https://ryze-t.github.io/tags/hevd/" class="tag-list-link">hevd</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://ryze-t.github.io/tags/index/" class="tag-list-link">index</a><span
                     class="tag-list-count">1</span></li>
             
             
             <li class="tag-list-item"><a href="https://ryze-t.github.io/tags/windows/" class="tag-list-link">windows</a><span
-                    class="tag-list-count">1</span></li>
+                    class="tag-list-count">3</span></li>
             
         </ul>
 
@@ -199,6 +207,26 @@ function tagCloud(where, min, max) {
     <h3 class="widget-title">最新文章</h3>
     <div class="widget-body">
         <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://ryze-t.github.io/2021/01/hevd-uaf/" class="title">HEVD UAF</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2021-01-19 00:00:00 &#43;0800 CST" itemprop="datePublished">01-18</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://ryze-t.github.io/2021/01/hevd-%E4%BB%BB%E6%84%8F%E5%86%85%E5%AD%98%E8%A6%86%E7%9B%96/" class="title">HEVD 任意内存覆盖</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2021-01-19 00:00:00 &#43;0800 CST" itemprop="datePublished">01-18</time>
+                    </p>
+                </div>
+            </li>
             <li>
                 <div class="item-inner">
                     <p class="item-title">
@@ -224,6 +252,80 @@ function tagCloud(where, min, max) {
     
     
     
+    <article
+      class="article article-type-page"
+      itemscope
+      itemtype="http://schema.org/BlogPosting"
+    >
+      <div class="article-header">
+        <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2021/01/hevd-uaf/"
+    >HEVD UAF</a
+  >
+</h1>
+
+      </div>
+      <div class="article-entry text-muted" itemprop="description">
+        UAF 原理 当一个内存块被释放后再次使用，常见的有三种情况： 内存块被释放，其对应的指针被设置为 NULL，然后再次使用，程序无影响 内存块被释放，其对
+      </div>
+      <p class="article-meta">
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://ryze-t.github.io/2021/01/hevd-uaf/" class="">
+  <time datetime="2021-01-19 00:00:00 &#43;0800 CST" itemprop="datePublished">01-18</time>
+</a>
+</span>
+  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/windows/"> Windows </a>
+    <a class="article-tag-link" href="/tags/hevd/"> HEVD </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> &nbsp;<a href="/2021/01/hevd-uaf/#comments" class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 978字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 2分 </span>
+      </p>
+    </article>
+    <article
+      class="article article-type-page"
+      itemscope
+      itemtype="http://schema.org/BlogPosting"
+    >
+      <div class="article-header">
+        <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2021/01/hevd-%E4%BB%BB%E6%84%8F%E5%86%85%E5%AD%98%E8%A6%86%E7%9B%96/"
+    >HEVD 任意内存覆盖</a
+  >
+</h1>
+
+      </div>
+      <div class="article-entry text-muted" itemprop="description">
+        代码分析 ArbitraryWrite.h 定义了两个指针 where、what ArbitraryWrite.c *(Where) = *(What) 意为 Where 指向的地址所保存的值 等于 What 指向的地址所保存的值，如果可以控制两个指针就可以做到任意
+      </div>
+      <p class="article-meta">
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://ryze-t.github.io/2021/01/hevd-%E4%BB%BB%E6%84%8F%E5%86%85%E5%AD%98%E8%A6%86%E7%9B%96/" class="">
+  <time datetime="2021-01-19 00:00:00 &#43;0800 CST" itemprop="datePublished">01-18</time>
+</a>
+</span>
+  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/windows/"> Windows </a>
+    <a class="article-tag-link" href="/tags/hevd/"> HEVD </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> &nbsp;<a href="/2021/01/hevd-%E4%BB%BB%E6%84%8F%E5%86%85%E5%AD%98%E8%A6%86%E7%9B%96/#comments" class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 959字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 2分 </span>
+      </p>
+    </article>
     <article
       class="article article-type-page"
       itemscope

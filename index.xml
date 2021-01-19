@@ -6,10 +6,28 @@
     <description>Recent content on Ryze</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>CC BY 4.0</copyright>
-    <lastBuildDate>Mon, 18 Jan 2021 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 19 Jan 2021 00:00:00 +0800</lastBuildDate>
     
         <atom:link href="https://ryze-t.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>HEVD UAF</title>
+      <link>https://ryze-t.github.io/2021/01/hevd-uaf/</link>
+      <pubDate>Tue, 19 Jan 2021 00:00:00 +0800</pubDate>
+      
+      <guid>https://ryze-t.github.io/2021/01/hevd-uaf/</guid>
+      <description>UAF 原理 当一个内存块被释放后再次使用，常见的有三种情况： 内存块被释放，其对应的指针被设置为 NULL，然后再次使用，程序无影响 内存块被释放，其对</description>
+    </item>
+    
+    <item>
+      <title>HEVD 任意内存覆盖</title>
+      <link>https://ryze-t.github.io/2021/01/hevd-%E4%BB%BB%E6%84%8F%E5%86%85%E5%AD%98%E8%A6%86%E7%9B%96/</link>
+      <pubDate>Tue, 19 Jan 2021 00:00:00 +0800</pubDate>
+      
+      <guid>https://ryze-t.github.io/2021/01/hevd-%E4%BB%BB%E6%84%8F%E5%86%85%E5%AD%98%E8%A6%86%E7%9B%96/</guid>
+      <description>代码分析 ArbitraryWrite.h 定义了两个指针 where、what ArbitraryWrite.c *(Where) = *(What) 意为 Where 指向的地址所保存的值 等于 What 指向的地址所保存的值，如果可以控制两个指针就可以做到任意</description>
+    </item>
     
     <item>
       <title>About</title>
