@@ -2,7 +2,8 @@
 <html lang="zh">
   <head>
     <title>
-        Ryze</title>
+        Cmd缺陷 - Ryze
+      </title>
         <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -19,27 +20,34 @@
     <meta http-equiv="window-target" content="_top" />
     
     
-    
+    <meta name="description" content="原文：https://hackingiscool.pl/cmdhijack-command-argument-confusion-with-" />
     <meta name="generator" content="Hugo 0.78.1 with theme pure" />
-    <title>Ryze</title>
+    <title>Cmd缺陷 - Ryze</title>
     
-    <link rel="alternate" type="application/rss+xml" href="https://ryze-t.github.io/tags/hevd/index.xml" title="Ryze" />
     
     <link rel="stylesheet" href="https://ryze-t.github.io/css/style.min.5743fa7b2206cb1eb1d7532cda60d1ebf1e3ae4aac4077fc182a92c911e04e02.css">
     
     <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async> 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css" async>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
-    <meta property="og:title" content="HEVD" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://ryze-t.github.io/tags/hevd/" />
-<meta property="og:updated_time" content="2021-01-19T00:00:00+08:00" />
-<meta itemprop="name" content="HEVD">
-<meta itemprop="description" content="">
+    <meta property="og:title" content="Cmd缺陷" />
+<meta property="og:description" content="原文：https://hackingiscool.pl/cmdhijack-command-argument-confusion-with-" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ryze-t.github.io/2021/01/cmd%E7%BC%BA%E9%99%B7/" />
+<meta property="article:published_time" content="2021-01-25T00:00:00+08:00" />
+<meta property="article:modified_time" content="2021-01-25T00:00:00+08:00" />
+<meta itemprop="name" content="Cmd缺陷">
+<meta itemprop="description" content="原文：https://hackingiscool.pl/cmdhijack-command-argument-confusion-with-">
+<meta itemprop="datePublished" content="2021-01-25T00:00:00+08:00" />
+<meta itemprop="dateModified" content="2021-01-25T00:00:00+08:00" />
+<meta itemprop="wordCount" content="748">
+
+
+
+<meta itemprop="keywords" content="tips,translation,attack," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="HEVD"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:title" content="Cmd缺陷"/>
+<meta name="twitter:description" content="原文：https://hackingiscool.pl/cmdhijack-command-argument-confusion-with-"/>
 
     <!--[if lte IE 9]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -271,74 +279,155 @@ function tagCloud(where, min, max) {
 
     
     
-<main class="main" role="main">
-    <article class="content article article-tags post-type-list" itemscope="">
-        <header class="article-header">
-            <h1 itemprop="name" class="hidden-xs">HEVD</h1>
-            <p class="text-muted hidden-xs">共 5 个标签</p>
-            <nav role="navigation" id="nav-main" class="okayNav">
-                <ul>
-                    <li><a href="https://ryze-t.github.io/tags">All</a></li>
-                    <li><a href="https://ryze-t.github.io/tags/attack/">attack</a></li>
-                    <li><a href="https://ryze-t.github.io/tags/hevd/">HEVD</a></li>
-                    <li><a href="https://ryze-t.github.io/tags/tips/">tips</a></li>
-                    <li><a href="https://ryze-t.github.io/tags/translation/">translation</a></li>
-                    <li><a href="https://ryze-t.github.io/tags/windows/">Windows</a></li>
-                </ul>
-            </nav>
-        </header>
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2021/01/cmd%E7%BC%BA%E9%99%B7/"
+    >Cmd缺陷</a
+  >
+</h1>
+
+      <div class="article-meta">
         
-        <div class="article-body">
-            <div class="col-md-6"><article class="panel panel-default hover-shadow hover-grow" itemscope itemtype="http://schema.org/BlogPosting">
-    <div class="panel-body">
-        <div class="article-meta">
-            <time datetime="2021-01-19 00:00:00 &#43;0800 CST"
-                itemprop="datePublished">01-18</time>
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://ryze-t.github.io/2021/01/cmd%E7%BC%BA%E9%99%B7/" class="article-date">
+  <time datetime="2021-01-25 00:00:00 &#43;0800 CST" itemprop="datePublished">01-18</time>
+</a>
+</span>
+  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/tips/"> tips </a>
+    <a class="article-tag-link" href="/tags/translation/"> translation </a>
+    <a class="article-tag-link" href="/tags/attack/"> attack </a>
+  </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/2021/01/cmd%E7%BC%BA%E9%99%B7/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 748字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 2分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <p><strong>原文：<a href="https://hackingiscool.pl/cmdhijack-command-argument-confusion-with-path-traversal-in-cmd-exe/">https://hackingiscool.pl/cmdhijack-command-argument-confusion-with-path-traversal-in-cmd-exe/</a></strong></p>
+<h2 id="背景">背景</h2>
+<p>windows下外部程序执行cmd命令一般使用的是<code>cmd.exe /c &quot;command&quot;,</code>在web应用中经常会碰到应用执行命令如 ping 的情况，其调用的就是 <code>cmd.exe /c &quot;ping 127.0.0.1&quot;</code>,127.0.0.1 是外部可控参数，当参数未做过滤时即会形成命令注入，例如将参数改成 <code>127.0.0.1|whoami</code></p>
+<h2 id="缺陷">缺陷</h2>
+<ul>
+<li>当可控参数无法使用 | 或 &amp;符号时，命令注入在传统意义上就失去了效果，但是cmd.exe本身存在一定缺陷，用户可用通过路径遍历的方式，使cmd.exe执行任意可执行文件，即<code>cmd.exe /c &quot;ping 127.0.0.1../../../../../../../windows/system32/calc.exe&quot;</code></li>
+<li>调用<code>cmd.exe /c &quot;command&quot;</code>这种模式，可以通过路径遍历执行任意可执行文件，同时commad里调用命令的参数可以是混乱的，即<code>cmd.exe /c &quot;ping 1 2 3 4 5 6 7 127.0.0.1../../../../../../../windows/system32/calc.exe&quot;</code></li>
+</ul>
+<h2 id="php命令注入">PHP命令注入</h2>
+<p>php中有许多函数可以达到执行命令的效果，例如 <code>exec()、shell_exec()、system()、passthru()</code></p>
+<p>php中有两个函数专门用来防御命令注入，分别是<code>escapeshellcmd()</code>和<code>escapeshellarg()</code></p>
+<p>其中<code>escapeshellcmd()</code>解释如下：</p>
+<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20200928172015245.png" alt="image-20200928172015245"></p>
+<h2 id="利用">利用</h2>
+<h3 id="测试">测试</h3>
+<p>测试代码如下：</p>
+<pre><code class="language-php">&lt;?php
+if(isset($_POST['host']))
+{
+    $host = $_POST['host'];
+    $command = escapeshellcmd(&quot;ping $host&quot;);
+    echo shell_exec($command);
+}
+else
+{
+    echo &quot;No host specified&quot;;
+}
+</code></pre>
+<p>正常命令注入：</p>
+<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20200928172154475.png" alt="image-20200928172154475"></p>
+<h3 id="执行exe">执行exe</h3>
+<p>利用缺陷后的命令注入：
+<img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20200928172103757.png" alt="image-20200928172103757">
+<img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20200928172129755.png" alt="image-20200928172129755"></p>
+<h3 id="执行-png">执行 png</h3>
+<p>将木马后缀更改为 png，上传到网站目录下，通过此方法执行png：
+<img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20200928172217339.png" alt="image-20200928172217339">
+msf：</p>
+<p><img src="https://gitee.com/tboom_is_here/picture-bed/raw/master/uPic/image-20200928172229516.png" alt="image-20200928172229516"></p>
+<h3 id="带参数执行">带参数执行</h3>
+<p>运行目标可执行文件时，cmd.exe会将<code>/c</code>后的命令行的整个部分传递给遍历出来的文件，因此若该可执行文件对参数要求宽松，即读取任意参数，但会自动过滤不可用参数时，可以做到带参数命令。</p>
+
+    </div>
+    <div class="article-footer">
+<blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接: </strong>
+      <a href="https://ryze-t.github.io/2021/01/cmd%E7%BC%BA%E9%99%B7/" title="Cmd缺陷" target="_blank" rel="external">https://ryze-t.github.io/2021/01/cmd%E7%BC%BA%E9%99%B7/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>License: </strong>
+        <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0</a>
+    </li>
+  </ul>
+</blockquote>
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/Ryze-T" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://ryze-t.github.io/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/Ryze-T" target="_blank"><span class="text-dark">Ryze</span><small class="ml-1x">sec</small></a></h3>
+        <div>Attack and Crack</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://ryze-t.github.io/2021/01/hevd-uaf/" title="HEVD UAF"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
         </div>
-        <h3 class="article-title" itemprop="name">
-            <a class="article-link" href="https://ryze-t.github.io/2021/01/hevd-uaf/">HEVD UAF</a>
-        </h3>
     </div>
-    <div class="panel-footer">
-        <a href="https://ryze-t.github.io/tags/windows" class="label label-default mb">Windows</a>
-        <a href="https://ryze-t.github.io/tags/hevd" class="label label-default mb">HEVD</a>
-    </div>
-</article>
-            </div>
-            <div class="col-md-6"><article class="panel panel-default hover-shadow hover-grow" itemscope itemtype="http://schema.org/BlogPosting">
-    <div class="panel-body">
-        <div class="article-meta">
-            <time datetime="2021-01-19 00:00:00 &#43;0800 CST"
-                itemprop="datePublished">01-18</time>
-        </div>
-        <h3 class="article-title" itemprop="name">
-            <a class="article-link" href="https://ryze-t.github.io/2021/01/hevd-%E4%BB%BB%E6%84%8F%E5%86%85%E5%AD%98%E8%A6%86%E7%9B%96/">HEVD 任意内存覆盖</a>
-        </h3>
-    </div>
-    <div class="panel-footer">
-        <a href="https://ryze-t.github.io/tags/windows" class="label label-default mb">Windows</a>
-        <a href="https://ryze-t.github.io/tags/hevd" class="label label-default mb">HEVD</a>
-    </div>
-</article>
-            </div>
-            <div class="col-md-6"><article class="panel panel-default hover-shadow hover-grow" itemscope itemtype="http://schema.org/BlogPosting">
-    <div class="panel-body">
-        <div class="article-meta">
-            <time datetime="2021-01-18 00:00:00 &#43;0800 CST"
-                itemprop="datePublished">01-18</time>
-        </div>
-        <h3 class="article-title" itemprop="name">
-            <a class="article-link" href="https://ryze-t.github.io/2021/01/hevd-%E6%A0%88%E6%BA%A2%E5%87%BA/">HEVD 栈溢出</a>
-        </h3>
-    </div>
-    <div class="panel-footer">
-        <a href="https://ryze-t.github.io/tags/windows" class="label label-default mb">Windows</a>
-        <a href="https://ryze-t.github.io/tags/hevd" class="label label-default mb">HEVD</a>
-    </div>
-</article>
-            </div>
-        </div>
-    </article>
+</nav>
+
+
 </main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
 <ul class="social-links">
     <li><a href="https://github.com/Ryze-T" target="_blank" title="github" data-toggle=tooltip data-placement=top >
@@ -413,6 +502,22 @@ function tagCloud(where, min, max) {
         
         hasInnerContainers: true,
     });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: '6d912887a278a8267017',
+        clientSecret: '39543a6480907d0abe2dd5161993b37d9501586f',
+        repo: 'issues',
+        owner: 'Ryze-T',
+        admin: ['Ryze-T'],
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('comments');
 </script>
 
   </body>

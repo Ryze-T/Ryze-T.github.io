@@ -11,6 +11,15 @@
     
     
     <item>
+      <title>Cmd缺陷</title>
+      <link>https://ryze-t.github.io/2021/01/cmd%E7%BC%BA%E9%99%B7/</link>
+      <pubDate>Mon, 25 Jan 2021 00:00:00 +0800</pubDate>
+      
+      <guid>https://ryze-t.github.io/2021/01/cmd%E7%BC%BA%E9%99%B7/</guid>
+      <description>原文：https://hackingiscool.pl/cmdhijack-command-argument-confusion-with-</description>
+    </item>
+    
+    <item>
       <title>HEVD UAF</title>
       <link>https://ryze-t.github.io/2021/01/hevd-uaf/</link>
       <pubDate>Tue, 19 Jan 2021 00:00:00 +0800</pubDate>
